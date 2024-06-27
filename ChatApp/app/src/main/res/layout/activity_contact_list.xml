@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ContactListActivity">
+
+    <!-- 返回箭头 -->
+    <ImageView
+        android:id="@+id/back_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/baseline_arrow_back_24"
+        android:layout_margin="16dp"
+        android:contentDescription="返回"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="8dp" />
+
+    <!-- 标题 -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="通讯录"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp" />
+
+    <!-- 添加联系人按钮 -->
+
+    <!-- 搜索框 -->
+
+    <ImageButton
+        android:id="@+id/add_contact_button"
+        android:layout_width="wrap_content"
+        android:layout_height="34dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="18dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="添加联系人"
+        android:src="@drawable/baseline_add_24" />
+
+    <EditText
+        android:id="@+id/search_contact"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/back_arrow"
+        android:layout_marginTop="16dp"
+        android:hint="请输入账号"
+        android:padding="10dp"
+        android:background="@drawable/login_et_bg"
+        android:drawableStart="@drawable/baseline_search_24"
+        android:layout_marginBottom="8dp"/>
+
+    <!-- 联系人列表 -->
+    <ListView
+        android:id="@+id/contact_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/search_contact"
+        android:layout_marginTop="-14dp"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="0.5dp" />
+</RelativeLayout>

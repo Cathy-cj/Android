@@ -1,14 +1,12 @@
 package com.example.chatapp.db;
 
-// 创建 DatabaseHelper.java 文件
-
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    private static final String DATABASE_NAME = "user.db";
+    private static final String DATABASE_NAME = "chatapp.db";
     private static final int DATABASE_VERSION = 1;
 
     public static final String TABLE_USERS = "users";
@@ -39,4 +37,3 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 }
-

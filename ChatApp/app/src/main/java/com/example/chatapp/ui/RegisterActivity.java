@@ -35,6 +35,7 @@ public class RegisterActivity extends AppCompatActivity {
         registerButton = findViewById(R.id.register_button);//获取注册按钮
 
         userDao = new UserDao(this);
+        userDao.open(); // 打开数据库连接
 
         //返回
         findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
@@ -71,5 +72,11 @@ public class RegisterActivity extends AppCompatActivity {
                 Toast.makeText(this, "注册失败", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        userDao.close(); // 关闭数据库连接
     }
 }
