@@ -13,16 +13,13 @@
         android:theme="@style/Theme.ChatApp"
         tools:targetApi="31">
         <activity
-            android:name=".activity_contact_detail"
+            android:name=".ui.ContactDetailActivity"
             android:exported="false" />
         <activity
             android:name=".ui.AddContactActivity"
             android:exported="false" />
         <activity
-            android:name=".ContactListActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activity_afterlogin"
+            android:name=".ui.ContactListActivity"
             android:exported="false" />
         <activity
             android:name=".ui.RegisterActivity"

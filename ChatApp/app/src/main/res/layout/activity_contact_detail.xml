@@ -1,16 +1,27 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp">
 
+    <!-- 返回箭头 -->
+    <ImageView
+        android:id="@+id/back_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_margin="16dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="返回"
+        android:src="@drawable/baseline_arrow_back_24" />
+
     <!-- 标题 -->
     <TextView
         android:id="@+id/contact_detail_title"
+        android:layout_marginTop="30dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="联系人详情"
-        android:textSize="24sp"
+        android:textSize="40sp"
         android:textStyle="bold"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="16dp" />
@@ -20,10 +31,11 @@
         android:id="@+id/contact_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
         android:text="姓名："
-        android:textSize="18sp"
+        android:textSize="30sp"
         android:layout_below="@id/contact_detail_title"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="20dp" />
 
     <!-- 联系人电话 -->
     <TextView
@@ -31,18 +43,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="电话："
-        android:textSize="18sp"
+        android:textSize="30sp"
+        android:layout_marginLeft="15dp"
         android:layout_below="@id/contact_name"
-        android:layout_marginTop="8dp" />
-
-    <!-- 联系人邮箱 -->
-    <TextView
-        android:id="@+id/contact_email"
-        android:layout_width="wrap_content"
+        android:layout_marginTop="25dp"/>
+    <!-- 确认修改按钮 -->
+    <Button
+        android:id="@+id/confirm_button"
+        android:layout_width="258dp"
         android:layout_height="wrap_content"
-        android:text="邮箱："
-        android:textSize="18sp"
         android:layout_below="@id/contact_phone"
-        android:layout_marginTop="8dp" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="55dp"
+        android:text="确认修改"
+        android:backgroundTint="#EB9656"/>
 
 </RelativeLayout>

@@ -22,7 +22,7 @@ public class ContactDetailActivity extends AppCompatActivity {
         // 初始化界面元素
         contactNameTextView = findViewById(R.id.contact_name);
         contactPhoneTextView = findViewById(R.id.contact_phone);
-        contactEmailTextView = findViewById(R.id.contact_email);
+
 
         // 从Intent中获取联系人信息，这里假设通过Intent传递
         String contactName = getIntent().getStringExtra("contact_name");
