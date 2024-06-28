@@ -77,7 +77,18 @@ public class ContactListActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // 跳转到联系人详情页面
                 Intent intent = new Intent(ContactListActivity.this, ContactDetailActivity.class);
-                intent.putExtra("contactName", contacts.get(position));
+                SQLiteDatabase db = dbHelper.getReadableDatabase();
+                Cursor cursor = db.query(DatabaseHelper.TABLE_CONTACTS, null, null, null, null, null, null);
+
+                cursor.moveToPosition(position);
+                String contactId = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_CONTACT_ID));
+                String contactName = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_CONTACT_NAME));
+                String contactPhone = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_CONTACT_PHONE));
+                cursor.close();
+
+                intent.putExtra("contact_id", contactId);
+                intent.putExtra("contact_name", contactName);
+                intent.putExtra("contact_phone", contactPhone);
                 startActivity(intent);
             }
         });
@@ -91,6 +102,15 @@ public class ContactListActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // 重新加载联系人数据
+        contacts.clear();
+        loadContactsFromDatabase();
+        adapter.notifyDataSetChanged();
     }
 
     private void showDeleteConfirmDialog(int position) {

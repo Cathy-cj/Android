@@ -26,37 +26,59 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="16dp" />
 
-    <!-- 联系人姓名 -->
+    <!-- 联系人姓名标签 -->
     <TextView
-        android:id="@+id/contact_name"
+        android:id="@+id/contact_name_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
         android:text="姓名："
         android:textSize="30sp"
+        android:layout_marginLeft="15dp"
         android:layout_below="@id/contact_detail_title"
         android:layout_marginTop="20dp" />
 
-    <!-- 联系人电话 -->
+    <!-- 联系人姓名编辑框 -->
+    <EditText
+        android:id="@+id/contact_name_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="30sp"
+        android:layout_toRightOf="@id/contact_name_label"
+        android:layout_alignBaseline="@id/contact_name_label"
+        android:layout_marginLeft="10dp" />
+
+    <!-- 联系人电话标签 -->
     <TextView
-        android:id="@+id/contact_phone"
+        android:id="@+id/contact_phone_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="电话："
         android:textSize="30sp"
         android:layout_marginLeft="15dp"
-        android:layout_below="@id/contact_name"
+        android:layout_below="@id/contact_name_label"
         android:layout_marginTop="25dp"/>
+
+    <!-- 联系人电话显示 -->
+    <TextView
+        android:id="@+id/contact_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="30sp"
+        android:layout_toRightOf="@id/contact_phone_label"
+        android:layout_alignBaseline="@id/contact_phone_label"
+        android:layout_marginLeft="10dp"/>
+
     <!-- 确认修改按钮 -->
     <Button
         android:id="@+id/confirm_button"
         android:layout_width="258dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/contact_phone"
+        android:layout_below="@id/contact_phone_label"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="55dp"
         android:text="确认修改"
         android:backgroundTint="#EB9656"/>
-
 </RelativeLayout>
