@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -27,6 +28,7 @@ public class ContactListActivity extends AppCompatActivity {
     private ArrayList<String> contacts;
     private ArrayAdapter<String> adapter;
     private DatabaseHelper dbHelper;
+    private String currentUserPhone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,9 @@ public class ContactListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_contact_list);
 
         dbHelper = new DatabaseHelper(this);
+
+        // 获取当前登录用户的手机号
+        currentUserPhone = getIntent().getStringExtra("currentUser");
 
         // 初始化联系人列表
         contacts = new ArrayList<>();
@@ -52,6 +57,7 @@ public class ContactListActivity extends AppCompatActivity {
                 Log.d("ContactListActivity", "Add contact button clicked");
                 // 跳转到添加联系人页面
                 Intent intent = new Intent(ContactListActivity.this, AddContactActivity.class);
+                intent.putExtra("currentUser", currentUserPhone);
                 startActivityForResult(intent, 1);
             }
         });
@@ -77,19 +83,28 @@ public class ContactListActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // 跳转到联系人详情页面
                 Intent intent = new Intent(ContactListActivity.this, ContactDetailActivity.class);
+                String[] columns = {
+                        DatabaseHelper.COLUMN_CONTACT_ID,
+                        DatabaseHelper.COLUMN_CONTACT_NAME,
+                        DatabaseHelper.COLUMN_CONTACT_PHONE
+                };
+                String selection = DatabaseHelper.COLUMN_PHONE + "=?";
+                String[] selectionArgs = { currentUserPhone };
+
                 SQLiteDatabase db = dbHelper.getReadableDatabase();
-                Cursor cursor = db.query(DatabaseHelper.TABLE_CONTACTS, null, null, null, null, null, null);
+                Cursor cursor = db.query(DatabaseHelper.TABLE_CONTACTS, columns, selection, selectionArgs, null, null, null);
 
-                cursor.moveToPosition(position);
-                String contactId = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_CONTACT_ID));
-                String contactName = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_CONTACT_NAME));
-                String contactPhone = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_CONTACT_PHONE));
+                if (cursor.moveToPosition(position)) {
+                    String contactId = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_CONTACT_ID));
+                    String contactName = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_CONTACT_NAME));
+                    String contactPhone = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_CONTACT_PHONE));
+
+                    intent.putExtra("contact_id", contactId);
+                    intent.putExtra("contact_name", contactName);
+                    intent.putExtra("contact_phone", contactPhone);
+                    startActivity(intent);
+                }
                 cursor.close();
-
-                intent.putExtra("contact_id", contactId);
-                intent.putExtra("contact_name", contactName);
-                intent.putExtra("contact_phone", contactPhone);
-                startActivity(intent);
             }
         });
 
@@ -100,6 +115,19 @@ public class ContactListActivity extends AppCompatActivity {
                 // 弹出删除确认对话框
                 showDeleteConfirmDialog(position);
                 return true;
+            }
+        });
+
+        // 添加消息列表按钮
+        ImageView messageButton = findViewById(R.id.message_button);
+        messageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("ContactListActivity", "Message button clicked");
+                // 跳转到消息列表页面
+                Intent intent = new Intent(ContactListActivity.this, MessageListActivity.class);
+                intent.putExtra("currentUser", currentUserPhone);
+                startActivity(intent);
             }
         });
     }
@@ -139,7 +167,9 @@ public class ContactListActivity extends AppCompatActivity {
 
     private void loadContactsFromDatabase() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor cursor = db.query(DatabaseHelper.TABLE_CONTACTS, null, null, null, null, null, null);
+        String selection = DatabaseHelper.COLUMN_PHONE + "=?";
+        String[] selectionArgs = { currentUserPhone };
+        Cursor cursor = db.query(DatabaseHelper.TABLE_CONTACTS, null, selection, selectionArgs, null, null, null);
 
         while (cursor.moveToNext()) {
             String name = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_CONTACT_NAME));
@@ -152,6 +182,8 @@ public class ContactListActivity extends AppCompatActivity {
     private void deleteContactFromDatabase(String contact) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         String phone = contact.substring(contact.indexOf("(") + 1, contact.indexOf(")"));
-        db.delete(DatabaseHelper.TABLE_CONTACTS, DatabaseHelper.COLUMN_CONTACT_PHONE + "=?", new String[]{phone});
+        String selection = DatabaseHelper.COLUMN_PHONE + "=? AND " + DatabaseHelper.COLUMN_CONTACT_PHONE + "=?";
+        String[] selectionArgs = { currentUserPhone, phone };
+        db.delete(DatabaseHelper.TABLE_CONTACTS, selection, selectionArgs);
     }
 }

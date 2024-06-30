@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,12 +12,14 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.chatapp.R;
 import com.example.chatapp.db.DatabaseHelper;
 
 public class AddContactActivity extends AppCompatActivity {
 
     private DatabaseHelper dbHelper;
+    private String currentUserPhone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +27,9 @@ public class AddContactActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_contact);
 
         dbHelper = new DatabaseHelper(this);
+
+        // 获取当前登录用户的手机号
+        currentUserPhone = getIntent().getStringExtra("currentUser");
 
         EditText contactNameEditText = findViewById(R.id.contact_name);
         EditText contactPhoneEditText = findViewById(R.id.contact_phone);
@@ -43,7 +47,7 @@ public class AddContactActivity extends AppCompatActivity {
                 } else {
                     if (isPhoneRegistered(contactPhone)) {
                         if (isContactExists(contactPhone)) {
-                            Toast.makeText(AddContactActivity.this, "已存在此用户", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AddContactActivity.this, "已存在此联系人", Toast.LENGTH_SHORT).show();
                         } else {
                             saveContact(contactName, contactPhone);
                             Intent resultIntent = new Intent();
@@ -62,6 +66,7 @@ public class AddContactActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AddContactActivity.this, ContactListActivity.class);
+                intent.putExtra("currentUser", currentUserPhone);
                 startActivity(intent);
                 finish();
             }
@@ -97,6 +102,7 @@ public class AddContactActivity extends AppCompatActivity {
         ContentValues values = new ContentValues();
         values.put(DatabaseHelper.COLUMN_CONTACT_NAME, name);
         values.put(DatabaseHelper.COLUMN_CONTACT_PHONE, phone);
+        values.put(DatabaseHelper.COLUMN_PHONE, currentUserPhone); // 保存当前用户的手机号
         db.insert(DatabaseHelper.TABLE_CONTACTS, null, values);
     }
 }

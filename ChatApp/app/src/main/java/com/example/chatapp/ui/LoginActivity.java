@@ -63,6 +63,7 @@ public class LoginActivity extends AppCompatActivity {
                     User user = userDao.getUser(phoneNumber);
                     if (user != null && user.getPassword().equals(password)) {
                         Intent intent = new Intent(LoginActivity.this, ContactListActivity.class);
+                        intent.putExtra("currentUser",phoneNumber);
                         startActivity(intent);
                         finish();
                     } else {
