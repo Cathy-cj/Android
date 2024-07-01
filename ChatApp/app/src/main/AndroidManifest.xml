@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
+        android:name=".base.BaseApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -45,12 +46,16 @@
         <activity
             android:name=".ui.LoginActivity"
             android:exported="true">
+        </activity>
+        <activity android:name="com.example.chatapp.ui.login.LoginActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.example.chatapp.ui.login.RegisterActivity" />
+        <activity android:name="com.example.chatapp.ui.home.HomeActivity" />
     </application>
 
 </manifest>
