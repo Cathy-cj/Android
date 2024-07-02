@@ -20,11 +20,11 @@ public class ContactsAdapter extends BaseQuickAdapter<Contacts, QuickViewHolder>
     protected void onBindViewHolder(@NonNull QuickViewHolder holder, int i, @Nullable Contacts item) {
         if (item == null) return;
         if (item.getMyPhone().equals(UserCache.INSTANCE.getUser().getPhone())) {
-            holder.setText(R.id.tvNickName, item.getFriendName());
+            holder.setText(R.id.tvNickName, item.getFriendNickName());
             holder.setText(R.id.tvPhone, item.getFriendPhone());
             // head pic
         } else {
-            holder.setText(R.id.tvNickName, item.getMyName());
+            holder.setText(R.id.tvNickName, item.getMyNickName());
             holder.setText(R.id.tvPhone, item.getMyPhone());
         }
     }
@@ -41,9 +41,9 @@ public class ContactsAdapter extends BaseQuickAdapter<Contacts, QuickViewHolder>
     @NotNull
     public String getFriendName(Contacts contact) {
         if (contact.getMyPhone().equals(UserCache.INSTANCE.getUser().getPhone())) {
-            return contact.getFriendName();
+            return contact.getFriendNickName();
         } else {
-            return contact.getFriendPhone();
+            return contact.getMyName();
         }
     }
 

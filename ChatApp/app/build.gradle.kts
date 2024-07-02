@@ -49,6 +49,7 @@ dependencies {
     ksp(libs.androidx.room.compiler)
     implementation(libs.koin.android)
     implementation(libs.brvah)
+    implementation(libs.dialogx)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

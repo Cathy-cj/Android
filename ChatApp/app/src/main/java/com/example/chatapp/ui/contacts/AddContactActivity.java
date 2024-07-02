@@ -14,7 +14,6 @@ import com.example.chatapp.db.user.UserDao;
 import com.example.chatapp.util.UserCache;
 
 import java.util.List;
-import java.util.Objects;
 
 import kotlin.Lazy;
 
@@ -51,10 +50,14 @@ public class AddContactActivity extends BaseActivity<ActivityAddContactBinding> 
                             Contacts contact = new Contacts(
                                     UserCache.INSTANCE.getUser().getPhone(),
                                     UserCache.INSTANCE.getUser().getNikeName(),
+                                    UserCache.INSTANCE.getUser().getNikeName(),
                                     addUser.getPhone(),
-                                    addUser.getNikeName()
+                                    addUser.getNikeName(),
+                                    addUser.getNikeName(),
+                                    false
                             );
                             contactsDao.getValue().addContact(contact);
+                            showToast("添加成功");
                             finish();
                         }
                     } catch (Exception e) {

@@ -6,6 +6,9 @@ import androidx.room.Entity
 data class Contacts(
     val myPhone: String,
     val myName: String,
+    val myNickName: String,
     val friendPhone: String,
     val friendName: String,
+    val friendNickName: String,
+    val deleteFlag: Boolean
 )

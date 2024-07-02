@@ -11,10 +11,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.chatapp.base.BaseActivity;
 import com.example.chatapp.databinding.ActivityP2pMessageBinding;
+import com.example.chatapp.db.contacts.Contacts;
 import com.example.chatapp.db.message.Message;
 import com.example.chatapp.db.message.MessageDao;
 import com.example.chatapp.ui.message.adapter.P2PMessageAdapter;
 import com.example.chatapp.util.UserCache;
+import com.kongzue.dialogx.dialogs.BottomMenu;
+import com.kongzue.dialogx.dialogs.MessageDialog;
 
 import java.util.List;
 import java.util.Objects;
@@ -82,8 +85,8 @@ public class P2PMessageActivity extends BaseActivity<ActivityP2pMessageBinding> 
 
         // 消息长按
         messageAdapter.setOnItemLongClickListener((baseQuickAdapter, view, i) -> {
-            // todo
-            return false;
+            showMessageLongClickDialog(messageAdapter.getItem(i));
+            return true;
         });
     }
 
@@ -100,5 +103,78 @@ public class P2PMessageActivity extends BaseActivity<ActivityP2pMessageBinding> 
             });
             return null;
         });
+    }
+
+    /**
+     * 长按消息弹窗
+     *
+     * @param message 消息
+     */
+    private void showMessageLongClickDialog(Message message) {
+        BottomMenu.show(List.of("删除", "撤回"))
+                .setOnMenuItemClickListener((dialog, text, index) -> {
+                    if (index == 0) {
+                        showDeleteMessageDialog(message);
+                    } else if (index == 1) {
+                        showRevokeMessageDialog(message);
+                    }
+                    return false;
+                });
+    }
+
+    /**
+     * 撤回消息
+     *
+     * @param message
+     */
+    private void showRevokeMessageDialog(Message message) {
+        new MessageDialog("提示", "确认撤回该消息吗？", "确定", "取消")
+                .setOkButtonClickListener((dialog, v) -> {
+                    launchIO(() -> {
+                        try {
+                            messageDao.getValue().revoke(message.getId());
+                            runOnUiThread(() -> {
+                                messageAdapter.remove(message);
+                                showToast("撤回成功");
+                            });
+                        } catch (Exception e) {
+                            showToast("撤回失败");
+                        }
+                        return null;
+                    });
+                    return false;
+                })
+                .setCancelButtonClickListener((dialog, v) -> {
+                    dialog.dismiss();
+                    return false;
+                }).show();
+    }
+
+    /**
+     * 删除消息
+     *
+     * @param message
+     */
+    private void showDeleteMessageDialog(Message message) {
+        new MessageDialog("提示", "确认删除该消息吗？", "确定", "取消")
+                .setOkButtonClickListener((dialog, v) -> {
+                    launchIO(() -> {
+                        try {
+                            messageDao.getValue().delete(message.getId(), UserCache.INSTANCE.getUser().getPhone());
+                            runOnUiThread(() -> {
+                                messageAdapter.remove(message);
+                                showToast("删除成功");
+                            });
+                        } catch (Exception e) {
+                            showToast("删除失败");
+                        }
+                        return null;
+                    });
+                    return false;
+                })
+                .setCancelButtonClickListener((dialog, v) -> {
+                    dialog.dismiss();
+                    return false;
+                }).show();
     }
 }
