@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.chatapp.ContactListActivity;
 import com.example.chatapp.R;
 import com.example.chatapp.db.DatabaseHelper;
 

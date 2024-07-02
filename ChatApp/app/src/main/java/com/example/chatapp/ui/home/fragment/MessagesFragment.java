@@ -11,6 +11,9 @@ import androidx.annotation.Nullable;
 import com.example.chatapp.base.BaseFragment;
 import com.example.chatapp.databinding.FragmentMessageBinding;
 
+/**
+ * 会话列表
+ */
 public class MessagesFragment extends BaseFragment<FragmentMessageBinding> {
 
     @NonNull

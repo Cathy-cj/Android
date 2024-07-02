@@ -23,11 +23,11 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
     @Override
     public Fragment createFragment(int position) {
         switch (position) {
-//            case 0:
-//                return new MessagesFragment();
             case 0:
-                return new ContactsFragment();
+                return new MessagesFragment();
             case 1:
+                return new ContactsFragment();
+            case 2:
                 return new MeFragment();
             default:
                 return null;

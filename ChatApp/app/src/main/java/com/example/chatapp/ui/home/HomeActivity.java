@@ -13,14 +13,14 @@ import com.google.android.material.tabs.TabLayoutMediator;
 
 public class HomeActivity extends BaseActivity<ActivityHomeBinding> {
 
-    private final String[] tabs = new String[]{"通讯录", "我的"};
+    private final String[] tabs = new String[]{"消息", "通讯录", "我的"};
     private final int[] selectedIcons = new int[]{
-            // R.drawable.baseline_message_24,
+            R.drawable.baseline_message_24,
             R.drawable.baseline_contacts_24,
             R.drawable.baseline_person_24,
     };
     private final int[] unSelectedIcons = new int[]{
-            // R.drawable.baseline_message_24_grey,
+            R.drawable.baseline_message_24_grey,
             R.drawable.baseline_contacts_24_grey,
             R.drawable.baseline_person_24_grey,
     };

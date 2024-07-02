@@ -36,6 +36,9 @@ import kotlin.Lazy;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function0;
 
+/**
+ * 通讯录
+ */
 public class ContactsFragment extends BaseFragment<FragmentContactsBinding> {
 
     Lazy<ContactsDao> contactsDao = inject(ContactsDao.class);

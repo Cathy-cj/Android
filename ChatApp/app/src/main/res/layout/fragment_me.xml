@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
@@ -17,4 +18,20 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="我的" />
 
+
+    <!-- 退出登录按钮 -->
+    <Button
+        android:id="@+id/btn_logout"
+        android:layout_width="198dp"
+        android:layout_height="66dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="400dp"
+        android:text="退出登录"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:backgroundTint="#EB9656"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </RelativeLayout>
