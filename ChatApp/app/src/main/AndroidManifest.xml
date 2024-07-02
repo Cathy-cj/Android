@@ -56,6 +56,10 @@
         </activity>
         <activity android:name="com.example.chatapp.ui.login.RegisterActivity" />
         <activity android:name="com.example.chatapp.ui.home.HomeActivity" />
+        <activity android:name="com.example.chatapp.ui.contacts.AddContactActivity" />
+        <activity
+            android:name="com.example.chatapp.ui.message.P2PMessageActivity"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>

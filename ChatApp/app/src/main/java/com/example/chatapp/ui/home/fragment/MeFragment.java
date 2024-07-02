@@ -21,7 +21,6 @@ public class MeFragment extends BaseFragment<FragmentMeBinding> {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-
+        getBinding().tvTitle.setText("我的");
     }
 }

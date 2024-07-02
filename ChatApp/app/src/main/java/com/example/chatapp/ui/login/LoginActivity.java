@@ -40,8 +40,8 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
                             throw new IllegalStateException("账号或密码错误");
                         }
                         UserCache.INSTANCE.setUser(users.get(0));
-                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                         showToast("登录成功");
+                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                         startActivity(intent);
                         finish();
                     } catch (Exception e) {

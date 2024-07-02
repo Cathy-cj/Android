@@ -9,6 +9,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
+import com.example.chatapp.base.dialog.LoadingDialog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.reflect.Method
@@ -18,6 +19,8 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
     private var _binding: VB? = null
     val binding get() = _binding ?: throw NullPointerException("_binding create failed")
+
+    private var loadingDialog: LoadingDialog? = null
 
     abstract fun viewBound()
 
@@ -49,6 +52,9 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         _binding = null
     }
 
+    /**
+     * 协程 IO 调度
+     */
     fun launchIO(block: () -> Unit) {
         lifecycleScope.launch(Dispatchers.IO) {
             block()
@@ -58,6 +64,33 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     fun showToast(content: String) {
         runOnUiThread {
             Toast.makeText(this.applicationContext, content, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    /**
+     * 展示加载框
+     * @param text 显示文字
+     * @param cancelable 是否可取消
+     */
+    fun showLoadingDialog(text: String? = null, cancelable: Boolean = true) {
+        runOnUiThread {
+            if (loadingDialog == null) {
+                loadingDialog = LoadingDialog(this)
+            }
+            with(loadingDialog!!) {
+                setLoadingText(text)
+                setCancelable(cancelable)
+                show()
+            }
+        }
+    }
+
+    /**
+     * 关闭加载框
+     */
+    fun closeLoadingDialog() {
+        runOnUiThread {
+            loadingDialog?.dismiss()
         }
     }
 }

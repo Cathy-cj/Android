@@ -10,6 +10,9 @@ interface UserDao {
     @Insert(onConflict = OnConflictStrategy.ABORT)
     fun register(user: User)
 
-    @Query("SELECT * FROM USER WHERE phone = :phone AND password = :password")
-    fun login(phone: String?, password: String?): List<User>
+    @Query("SELECT * FROM User WHERE phone = :phone AND password = :password")
+    fun login(phone: String, password: String): List<User>
+
+    @Query("SELECT * FROM User WHERE phone = :phone")
+    fun queryUser(phone: String): List<User>
 }

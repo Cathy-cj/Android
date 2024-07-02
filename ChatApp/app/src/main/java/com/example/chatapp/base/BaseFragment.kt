@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
+import com.example.chatapp.base.dialog.LoadingDialog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -15,6 +16,8 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
 
     private var _binding: VB? = null
     val binding get() = _binding ?: throw NullPointerException("_binding create failed")
+
+    private var loadingDialog: LoadingDialog? = null
 
     abstract fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?): VB
 
@@ -40,6 +43,34 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
     fun showToast(content: String) {
         requireActivity().runOnUiThread {
             Toast.makeText(requireContext(), content, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+
+    /**
+     * 展示加载框
+     * @param text 显示文字
+     * @param cancelable 是否可取消
+     */
+    fun showLoadingDialog(text: String? = null, cancelable: Boolean = true) {
+        requireActivity().runOnUiThread {
+            if (loadingDialog == null) {
+                loadingDialog = LoadingDialog(requireContext())
+            }
+            with(loadingDialog!!) {
+                setLoadingText(text)
+                setCancelable(cancelable)
+                show()
+            }
+        }
+    }
+
+    /**
+     * 关闭加载框
+     */
+    fun closeLoadingDialog() {
+        requireActivity().runOnUiThread {
+            loadingDialog?.dismiss()
         }
     }
 }

@@ -22,7 +22,6 @@ public class MessagesFragment extends BaseFragment<FragmentMessageBinding> {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-
+        getBinding().tvTitle.setText("消息");
     }
 }

@@ -16,16 +16,15 @@
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:layout_gravity="center"
-            android:background="@drawable/ic_launcher_background"
-            android:src="@drawable/ic_launcher_foreground" />
+            android:background="@drawable/ic_launcher_background" />
 
         <TextView
             android:id="@+id/tvItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textSize="12sp"
             android:textColor="#D9000000"
+            android:textSize="12sp"
             tools:text="首页" />
     </LinearLayout>
 
