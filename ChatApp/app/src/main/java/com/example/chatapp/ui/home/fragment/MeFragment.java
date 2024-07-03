@@ -1,8 +1,6 @@
 package com.example.chatapp.ui.home.fragment;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,9 +10,11 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.chatapp.ui.login.LoginActivity;
 import com.example.chatapp.base.BaseFragment;
 import com.example.chatapp.databinding.FragmentMeBinding;
+import com.example.chatapp.db.user.User;
+import com.example.chatapp.ui.login.LoginActivity;
+import com.example.chatapp.util.UserCache;
 
 /**
  * 我的
@@ -39,17 +39,18 @@ public class MeFragment extends BaseFragment<FragmentMeBinding> {
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 清空用户数据（例如SharedPreferences）
-                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("user_data", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.clear();
-                editor.apply();
-
-                // 跳转到登录界面
-                Intent intent = new Intent(getActivity(), LoginActivity.class);
-                startActivity(intent);
-                getActivity().finish(); // 关闭当前活动
+                logout();
             }
         });
     }
+
+    // 在某个Activity中执行退出登录操作
+    private void logout() {
+        UserCache.INSTANCE.setUser(new User("", "", "", ""));
+        Intent intent = new Intent(requireContext(), LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        requireActivity().finish();
+    }
+
 }

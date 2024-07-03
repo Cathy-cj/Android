@@ -35,6 +35,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
             } else {
                 launchIO(() -> {
                     try {
+                        //数据库查询
                         List<User> users = userDao.getValue().login(phone, password);
                         if (users.isEmpty()) {
                             throw new IllegalStateException("账号或密码错误");

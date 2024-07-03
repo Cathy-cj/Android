@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.chatapp.base.BaseActivity;
 import com.example.chatapp.databinding.ActivityP2pMessageBinding;
-import com.example.chatapp.db.contacts.Contacts;
 import com.example.chatapp.db.message.Message;
 import com.example.chatapp.db.message.MessageDao;
 import com.example.chatapp.ui.message.adapter.P2PMessageAdapter;

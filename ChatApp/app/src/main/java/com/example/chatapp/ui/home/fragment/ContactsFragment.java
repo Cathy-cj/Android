@@ -135,32 +135,9 @@ public class ContactsFragment extends BaseFragment<FragmentContactsBinding> {
         });
     }
 
-    /**
-     * 搜索联系人
-     *
-     * @param keyword 关键词
-     */
-    private void searchContacts(String keyword) {
-        launchIO(new Function0<Unit>() {
-            @Override
-            public Unit invoke() {
-                try {
-                    List<Contacts> contacts = contactsDao.getValue().searchContacts(keyword);
-                    requireActivity().runOnUiThread(() -> {
-                        contactsAdapter.submitList(contacts);
-                    });
-                } catch (Exception e) {
-                    showToast("搜索失败");
-                }
-                return null;
-            }
-        });
-    }
 
     /**
      * 长按联系人弹窗
-     *
-     * @param contact 联系人
      */
     private void showContactsLongClickDialog(Contacts contact) {
         BottomMenu.show(List.of("修改昵称", "删除联系人"))
@@ -176,8 +153,6 @@ public class ContactsFragment extends BaseFragment<FragmentContactsBinding> {
 
     /**
      * 删除联系人提示
-     *
-     * @param contact 联系人
      */
     private void showDeletedContactDialog(Contacts contact) {
         new MessageDialog("提示", "确认删除该联系人吗", "确定", "取消")
@@ -204,8 +179,6 @@ public class ContactsFragment extends BaseFragment<FragmentContactsBinding> {
 
     /**
      * 修改联系人昵称
-     *
-     * @param contact 联系人
      */
     private void showModifierContactNicknameDialog(Contacts contact) {
         InputDialog.show("tips", "请输入联系人昵称", "确定")
@@ -238,6 +211,25 @@ public class ContactsFragment extends BaseFragment<FragmentContactsBinding> {
                 });
     }
 
+    /**
+     * 搜索联系人
+     */
+    private void searchContacts(String keyword) {
+        launchIO(new Function0<Unit>() {
+            @Override
+            public Unit invoke() {
+                try {
+                    List<Contacts> contacts = contactsDao.getValue().searchContacts(keyword);
+                    requireActivity().runOnUiThread(() -> {
+                        contactsAdapter.submitList(contacts);
+                    });
+                } catch (Exception e) {
+                    showToast("搜索失败");
+                }
+                return null;
+            }
+        });
+    }
 
     private boolean contactIsMe(Contacts contact) {
         return contact.getMyPhone().equals(UserCache.INSTANCE.getUser().getPhone());

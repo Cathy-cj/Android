@@ -12,7 +12,7 @@ import com.example.chatapp.db.user.UserDao;
 import kotlin.Lazy;
 
 public class RegisterActivity extends BaseActivity<ActivityRegisterBinding> {
-
+    //依赖
     Lazy<UserDao> userDao = inject(UserDao.class);
 
     @Override
@@ -35,6 +35,7 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding> {
                 launchIO(() -> {
                     try {
                         User user = new User(phone, nickName, password, "null");
+                        // 注册用户的数据库操作
                         userDao.getValue().register(user);
                         showToast("注册成功");
                         finish();

@@ -31,4 +31,16 @@ interface MessageDao {
     // 撤回消息
     @Query("UPDATE Message SET revokeFlag = 1 WHERE id = :id")
     fun revoke(id: String)
+
+    // 是否存在会话
+    @Query(
+        """
+        SELECT EXISTS(
+            SELECT 1 FROM Message 
+            WHERE (fromAccount = :phone AND toAccount = :friendPhone) 
+            OR (fromAccount = :friendPhone AND toAccount = :phone)
+        )
+    """
+    )
+    fun hasSessions(phone: String, friendPhone: String): Boolean
 }
