@@ -22,9 +22,14 @@ interface ContactsDao {
     /**
      * 搜索联系人
      */
-    @Query("SELECT * FROM Contacts WHERE myPhone LIKE '%' || :phone || '%' OR friendPhone LIKE '%' || :phone || '%'")
-    fun searchContacts(phone: String): List<Contacts>
-
+    @Query(
+        """
+        SELECT * FROM Contacts 
+        WHERE myPhone = :myPhone AND friendPhone LIKE '%' || :keyword || '%' 
+        OR friendPhone = :myPhone AND myPhone LIKE '%' || :keyword || '%'
+    """
+    )
+    fun searchContacts(myPhone: String, keyword: String): List<Contacts>
     /**
      * 检查是否是好友
      */

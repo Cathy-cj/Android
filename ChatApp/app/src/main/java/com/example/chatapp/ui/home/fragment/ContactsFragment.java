@@ -219,7 +219,8 @@ public class ContactsFragment extends BaseFragment<FragmentContactsBinding> {
             @Override
             public Unit invoke() {
                 try {
-                    List<Contacts> contacts = contactsDao.getValue().searchContacts(keyword);
+                    String myPhone = UserCache.INSTANCE.getUser().getPhone();
+                    List<Contacts> contacts = contactsDao.getValue().searchContacts(myPhone, keyword);
                     requireActivity().runOnUiThread(() -> {
                         contactsAdapter.submitList(contacts);
                     });
